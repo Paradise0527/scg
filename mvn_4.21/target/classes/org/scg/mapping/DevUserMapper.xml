@@ -21,4 +21,26 @@
          select * from app_category where categoryCode like "All%";
     </select>
 
+    <select id="categoryLevelList" resultType="AppCategory" parameterType="Integer">
+        select * from app_category where parentId=#{parentId}
+    </select>
+
+    <select id="appInfoList" resultType="AppInfo" >
+       select id, softwareName,APKName,softwareSize,
+  supportROM,interfaceLanguage,downloads,logoPicPath,logoLocPath,appinfo,
+ (select valueName from data_dictionary d where a.flatformId=d.valueId and d.typeCode='APP_FLATFORM')
+   as flatformName,
+ (select categoryName from app_category cat where a.categoryLevel1=cat.id)
+  as categoryName1,
+ (select categoryName from app_category cat where a.categoryLevel2=cat.id)
+  as categoryName2,
+ (select categoryName from app_category cat where a.categoryLevel3=cat.id)
+  as categoryName3,
+ (select valueName from data_dictionary d where a.status=d.valueId and d.typeCode='APP_STATUS')
+   as statusName,
+ (select versionNo from app_version v where a.versionid=v.id) as versionNo,status,versionId
+ from app_info a
+    </select>
+
+
 </mapper>

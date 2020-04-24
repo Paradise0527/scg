@@ -1,13 +1,15 @@
 package org.scg.controll;
 
 
-import org.scg.pojo.AppCategory;
-import org.scg.pojo.DataDictionary;
-import org.scg.pojo.DevUser;
+import com.github.pagehelper.PageInfo;
+import org.apache.log4j.Logger;
+import org.scg.pojo.*;
 import org.scg.service.DevUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.annotation.Resource;
@@ -18,6 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/dev")
 public class DevUserController {
+    Logger log4j = Logger.getLogger(DevUserController.class);
 
     //业务数据
     @Resource
@@ -53,20 +56,32 @@ public class DevUserController {
     }
 
     @RequestMapping("/list")
-    public String list(ModelMap map) {
+    public String list(ModelMap map, Parames parame){
         List<DataDictionary> statusList = devUserService.statusList();
-
         List<DataDictionary> flatFormList = devUserService.flatFormList();
-
         List<AppCategory> categoryLevel1List = devUserService.categoryLevel1List();
-
+        List<AppInfo> appInfoList = devUserService.appInfoList();
+        PageInfo<AppInfo> pageInfo = devUserService.getPageInfo(parame);
         //保存数据
         map.addAttribute("statusList", statusList);
         map.addAttribute("flatFormList", flatFormList);
         map.addAttribute("categoryLevel1List", categoryLevel1List);
+        map.addAttribute("appInfoList", appInfoList);
+        map.addAttribute("pages", pageInfo);
 
-
+        System.out.println(pageInfo);
         return "/dev/appinfolist"; //直接跳转
+    }
+
+    @RequestMapping("/categoryLevelList")
+    @ResponseBody
+    public List<AppCategory> categoryLevel1List(ModelMap map,Integer parentId){
+
+        List<AppCategory> list=devUserService.categoryLevelList(parentId);
+
+        map.addAttribute("categoryLevelList1", list);
+
+        return list;
     }
 
 }

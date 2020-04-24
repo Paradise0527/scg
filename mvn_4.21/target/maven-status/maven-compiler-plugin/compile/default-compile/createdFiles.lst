@@ -1,5 +1,10 @@
 org\scg\dao\DevUserDao.class
-org\scg\controll\DevUserController.class
+org\scg\pojo\AppInfo.class
 org\scg\service\DevUserService.class
-org\scg\service\impl\DevUserServiceImpl.class
 org\scg\pojo\DevUser.class
+org\scg\pojo\Parames.class
+org\scg\controll\DevUserController.class
+org\scg\pojo\DataDictionary.class
+org\scg\pojo\AppCategory.class
+org\scg\service\impl\DevUserServiceImpl.class
+org\scg\controll\MyController.class

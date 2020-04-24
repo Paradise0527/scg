@@ -165,14 +165,14 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="appInfo" items="${appInfoList }" varStatus="status">
+								<c:forEach var="appInfo" items="${pages.list}" varStatus="status">
 									<tr role="row" class="odd">
 										<td tabindex="0" class="sorting_1">${appInfo.softwareName}</td>
 										<td>${appInfo.APKName }</td>
 										<td>${appInfo.softwareSize }</td>
 										<td>${appInfo.flatformName }</td>
-										<td>${appInfo.categoryLevel1Name } -> ${appInfo.categoryLevel2Name } -> ${appInfo.categoryLevel3Name }</td>
-										<td><span id="appInfoStatus${appInfo.id}">${appInfo.statusName }</span></td>
+										<td>${appInfo.categoryName1} -> ${appInfo.categoryName2} -> ${appInfo.categoryName3}</td>
+										<td><span id="appInfoStatus${appInfo.id}">${appInfo.statusName}</span></td>
 										<td>${appInfo.downloads }</td>
 										<td>${appInfo.versionNo }</td>
 										<td>
@@ -198,7 +198,7 @@
                         <li><a class="addVersion" appinfoid="${appInfo.id }" data-toggle="tooltip" data-placement="top" title="" data-original-title="新增APP版本信息">新增版本</a>
                         </li>
                         <li><a class="modifyVersion" 
-											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
+											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }"
 											statusname="${appInfo.statusName }"											
 											data-toggle="tooltip" data-placement="top" title="" data-original-title="修改APP最新版本信息">修改版本</a>
                         </li>
@@ -219,37 +219,40 @@
 				<div class="row">
 					<div class="col-sm-5">
 						<div class="dataTables_info" id="datatable-responsive_info"
-							role="status" aria-live="polite">共${pages.totalCount }条记录
-							${pages.currentPageNo }/${pages.totalPageCount }页</div>
+							role="status" aria-live="polite">共${pages.total}条记录
+							${pages.pageNum }/${pages.pages }页</div>
 					</div>
 					<div class="col-sm-7">
 						<div class="dataTables_paginate paging_simple_numbers"
 							id="datatable-responsive_paginate">
 							<ul class="pagination">
-								<c:if test="${pages.currentPageNo > 1}">
+								<c:if test="${pages.pageNum > 1}">
 									<li class="paginate_button previous"><a
 										href="javascript:page_nav(document.forms[0],1);"
 										aria-controls="datatable-responsive" data-dt-idx="0"
 										tabindex="0">首页</a>
 									</li>
 									<li class="paginate_button "><a
-										href="javascript:page_nav(document.forms[0],${pages.currentPageNo-1});"
+										href="javascript:page_nav(document.forms[0],${pages.pageNum-1});"
 										aria-controls="datatable-responsive" data-dt-idx="1"
 										tabindex="0">上一页</a>
 									</li>
 								</c:if>
-								<c:if test="${pages.currentPageNo < pages.totalPageCount }">
+								<c:if test="${pages.pageNum < pages.pages}">
 									<li class="paginate_button "><a
-										href="javascript:page_nav(document.forms[0],${pages.currentPageNo+1 });"
+										href="javascript:page_nav(document.forms[0],${pages.pageNum+1});"
 										aria-controls="datatable-responsive" data-dt-idx="1"
 										tabindex="0">下一页</a>
 									</li>
 									<li class="paginate_button next"><a
-										href="javascript:page_nav(document.forms[0],${pages.totalPageCount });"
+										href="javascript:page_nav(document.forms[0],${pages.pages});"
 										aria-controls="datatable-responsive" data-dt-idx="7"
 										tabindex="0">最后一页</a>
 									</li>
 								</c:if>
+								<c:forEach var="i" begin="1" end="${pages.pages}">
+									<a href="/list?currentPageNo=${i}">${i}</a>&nbsp;
+								</c:forEach>
 							</ul>
 						</div>
 					</div>

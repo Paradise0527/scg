@@ -2,6 +2,7 @@ package org.scg.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.scg.pojo.AppCategory;
+import org.scg.pojo.AppInfo;
 import org.scg.pojo.DataDictionary;
 import org.scg.pojo.DevUser;
 
@@ -19,6 +20,12 @@ public interface DevUserDao {
     public List<DataDictionary> flatFormList();
 
     public List<AppCategory> categoryLevel1List();
+
+    public List<AppCategory> categoryLevelList(Integer parentId);
+
+    public  List<AppInfo> appInfoList();
+
+    public  List<AppInfo> find();
 
 
 }
